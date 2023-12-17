@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Email;
@@ -61,7 +62,7 @@ public class User {
     }
 
     // NOW() on update NOW()
-    @PrePersist
+    @PreUpdate
     protected void onUpdate() {
         this.updated_at = new Date();
     }

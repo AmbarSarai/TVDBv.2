@@ -1,17 +1,42 @@
 package com.tvdb.TVDB.services;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.tvdb.TVDB.models.User;
 import com.tvdb.TVDB.repositories.UserRepository;
 
+@Service
 public class UserServices {
+    @Autowired
+    private UserRepository userRepository;
 
-    private final UserRepository userRepository;
-
-    public UserServices(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public User createUser(User b) {
+        return userRepository.save(b);
     }
 
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public List<User> buscarTodos() {
+        return userRepository.findAll();
+    }
+
+    public User buscarId(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            return optionalUser.get();
+        } else {
+            return null;
+        }
+    }
+
+    public User buscarId(String email) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isPresent()) {
+            return optionalUser.get();
+        } else {
+            return null;
+        }
     }
 }
